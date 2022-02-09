@@ -1,6 +1,7 @@
 import numpy as np
 import csv
 import emoji
+import re
 
 def read_csv(filename):
     phrase = []
@@ -14,7 +15,7 @@ def read_csv(filename):
             emoji.append(row[1])
 
     X = np.asarray(phrase)
-    Y = np.asarray(emoji, dtype=int)
+    Y = np.asarray(emoji,dtype=int)
 
     return X, Y
 
@@ -30,6 +31,13 @@ emoji_dictionary = {"0": "\u2764\uFE0F",    # :heart: prints a black instead of 
                     "3": ":disappointed:",
                     "4": ":fork_and_knife:"}
 
+def normalize(X):
+    for i in range(len(X)):
+        X[i] = X[i].strip()
+        X[i] = X[i].lower()
+        X[i] = re.sub(r'[^\w\s]','',X[i])
+        
+    return X
 
 def read_glove_vecs(glove_file):
     with open(glove_file,'r') as f:
@@ -47,9 +55,10 @@ def read_glove_vecs(glove_file):
         for w in sorted(words):
             words_to_index[w] = i
             index_to_words[i] = w
-            i = i + 1
+            i += 1
+
     return words_to_index, index_to_words, word_to_vec_map
 
-def convert_to_one_hot(Y,C):
-    Y = np.eye(C)[Y.reshape(-1)]
+def convert_to_one_hot(Y,N_CLASSES):
+    Y = np.eye(N_CLASSES)[Y.reshape(-1)]
     return Y
