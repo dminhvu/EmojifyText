@@ -1,16 +1,16 @@
 from tensorflow.keras.layers import Embedding
 import numpy as np
 
-def pretrained_embedding_layer(word_to_vec_map, word_to_index):
+def pretrained_embedding_layer(word_to_vec_map,word_to_index):
     """
     Creates a Keras Embedding() layer and loads in pre-trained GloVe 50-dimensional vectors.
     
     Arguments:
-    word_to_vec_map -- dictionary mapping words to their GloVe vector representation.
-    word_to_index -- dictionary mapping from words to their indices in the vocabulary (400,001 words)
+    - word_to_vec_map -- dictionary mapping words to their GloVe vector representation.
+    - word_to_index -- dictionary mapping from words to their indices in the vocabulary (400,001 words)
 
     Returns:
-    embedding_layer -- pretrained layer Keras instance
+    - embedding_layer -- pretrained layer Keras instance
     """
     
     vocab_size = len(word_to_index) + 1              # adding 1 to fit Keras embedding (requirement)
@@ -42,18 +42,18 @@ def pretrained_embedding_layer(word_to_vec_map, word_to_index):
     
     return embedding_layer
 
-def sentences_to_indices(X, word_to_index, max_len):
+def sentences_to_indices(X,word_to_index,max_len):
     """
     Converts an array of sentences (strings) into an array of indices corresponding to words in the sentences.
-    The output shape should be such that it can be given to `Embedding()` (described in Figure 4). 
+    The output shape should be such that it can be given to 'Embedding()' (described in Figure 4). 
     
     Arguments:
-    X -- array of sentences (strings), of shape (m, 1)
-    word_to_index -- a dictionary containing the each word mapped to its index
-    max_len -- maximum number of words in a sentence. You can assume every sentence in X is no longer than this. 
+    - X -- array of sentences (strings), of shape (m, 1)
+    - word_to_index -- a dictionary containing the each word mapped to its index
+    - max_len -- maximum number of words in a sentence. You can assume every sentence in X is no longer than this. 
     
     Returns:
-    X_indices -- array of indices corresponding to words in the sentences from X, of shape (m, max_len)
+    - X_indices -- array of indices corresponding to words in the sentences from X, of shape (m, max_len)
     """
     
     n_samples = X.shape[0] # number of training examples
@@ -62,7 +62,7 @@ def sentences_to_indices(X, word_to_index, max_len):
     
     for i in range(n_samples):                               # loop over training examples
         
-        # Convert the ith training sentence in lower case and split is into words. You should get a list of words.
+        # Convert the ith training sentence in lower case and split it into words. You should get a list of words.
         sentence_words = X[i].lower().split()
         
         # Initialize j to 0
